@@ -32,11 +32,15 @@ export function Layout({ children }: { children: React.ReactNode }) {
       <head>
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta name="theme-color" media="(prefers-color-scheme: light)" content="#f3f8fd" />
+        <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#060b14" />
         <Meta />
         <Links />
       </head>
       <body className="flex flex-col min-h-screen">
-        <RootProvider>{children}</RootProvider>
+        <RootProvider theme={{ defaultTheme: 'system', enableSystem: true }}>
+          {children}
+        </RootProvider>
         <ScrollRestoration />
         <Scripts />
       </body>
@@ -63,7 +67,7 @@ export function ErrorBoundary({ error }: Route.ErrorBoundaryProps) {
   }
 
   return (
-    <main className="pt-16 p-4 w-full max-w-[1400px] mx-auto">
+    <main className="pt-16 p-4 w-full mx-auto">
       <h1>{message}</h1>
       <p>{details}</p>
       {stack && (

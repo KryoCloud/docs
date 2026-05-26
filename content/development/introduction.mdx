@@ -1,0 +1,52 @@
+---
+title: Introduction
+---
+
+# Dependency
+
+<Tabs items={["pom.xml", "build.gradle", "build.gradle.kts"]}>
+  <Tab value="pom.xml">
+    ```xml
+    <repositories>
+      <repository>
+        <id>kryocloud-release-repo</id>
+        <url>https://repo.kryocloud.eu/release</url>
+      </repository>
+    </repositories>
+
+    <dependency>
+      <groupId>eu.kryocloud</groupId>
+      <artifactId>kryocloud-api</artifactId>
+      <version>1.0.0-alpha.1</version>
+    </dependency>
+    ```
+  </Tab>
+  <Tab value="build.gradle">
+    ```kotlin
+    repositories {
+        maven {
+            name = "kryocloud-release-repo"
+            url = uri("https://repo.kryocloud.eu/release")
+        }
+    }
+
+    dependencies {
+        implementation "eu.kryocloud:kryocloud-api:1.0.0-alpha.1"
+    }
+    ```
+  </Tab>
+  <Tab value="build.gradle.kts">
+    ```kotlin
+    repositories {
+        maven {
+            name = "kryocloud-release-repo"
+            url = uri("https://repo.kryocloud.eu/release")
+        }
+    }
+
+    dependencies {
+        implementation("eu.kryocloud:kryocloud-api:1.0.0-alpha.1")
+    }
+    ```
+  </Tab>
+</Tabs>
