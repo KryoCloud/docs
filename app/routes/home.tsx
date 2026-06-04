@@ -1,5 +1,7 @@
 import type { Route } from './+types/home';
 import { DocsLayout } from 'fumadocs-ui/layouts/docs';
+import { DocsHeader } from '@/components/docs-header';
+import { SectionSwitcher } from '@/components/section-switcher';
 import {
   DocsBody,
   DocsDescription,
@@ -15,16 +17,38 @@ import { gitConfig } from '@/lib/shared';
 import { useFumadocsLoader } from 'fumadocs-core/source/client';
 import { getPageImagePath } from '@/lib/og';
 import { useMDXComponents } from '@/components/mdx';
+import type { Folder } from 'fumadocs-core/page-tree';
+import type { ShouldRevalidateFunction } from 'react-router';
+import { redirect, useLocation } from 'react-router';
+
+export const shouldRevalidate: ShouldRevalidateFunction = () => true;
 
 export async function loader({ params }: Route.LoaderArgs) {
   const slugs = (params['*'] ?? '').split('/').filter((v) => v.length > 0);
+  if (slugs.length === 0) return redirect('/manual/introduction');
+
   const page = source.getPage(slugs);
   if (!page) throw new Response('Not found', { status: 404 });
+
+  const fullTree = source.getPageTree();
+  const section = slugs[0];
+
+  let tree = fullTree;
+  if (section) {
+    const folder = fullTree.children.find(
+      (node): node is Folder =>
+        node.type === 'folder' &&
+        node.children.some(
+          (child) => child.type === 'page' && child.url.startsWith(`/${section}/`),
+        ),
+    );
+    if (folder) tree = { ...fullTree, children: folder.children };
+  }
 
   return {
     path: page.path,
     markdownUrl: getPageMarkdownUrl(page).url,
-    pageTree: await source.serializePageTree(source.getPageTree()),
+    pageTree: await source.serializePageTree(tree),
     imagePath: getPageImagePath(slugs),
   };
 }
@@ -67,9 +91,18 @@ const clientLoader = browserCollections.docs.createClientLoader({
 
 export default function Page({ loaderData }: Route.ComponentProps) {
   const { path, pageTree, imagePath, markdownUrl } = useFumadocsLoader(loaderData);
+  const { pathname } = useLocation();
+  const section = pathname.split('/').filter(Boolean)[0] ?? 'root';
 
   return (
-    <DocsLayout {...baseOptions()} tree={pageTree}>
+    <DocsLayout
+      key={section}
+      {...baseOptions()}
+      tree={pageTree}
+      tabs={false}
+      slots={{ header: DocsHeader }}
+      sidebar={{ banner: <SectionSwitcher /> }}
+    >
       {clientLoader.useContent(path, { markdownUrl, path, imagePath })}
     </DocsLayout>
   );

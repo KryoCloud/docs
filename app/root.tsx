@@ -14,15 +14,12 @@ import NotFound from './routes/not-found';
 import { docsContentRoute, docsRoute } from '@/lib/shared';
 
 export const links: Route.LinksFunction = () => [
-  { rel: 'preconnect', href: 'https://fonts.googleapis.com' },
   {
-    rel: 'preconnect',
-    href: 'https://fonts.gstatic.com',
+    rel: 'preload',
+    href: '/font/SpaceGrotesk-Regular.ttf',
+    as: 'font',
+    type: 'font/ttf',
     crossOrigin: 'anonymous',
-  },
-  {
-    rel: 'stylesheet',
-    href: 'https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap',
   },
 ];
 
@@ -37,7 +34,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <Meta />
         <Links />
       </head>
-      <body className="flex flex-col min-h-screen">
+      <body className="flex flex-col min-h-screen antialiased">
         <RootProvider theme={{ defaultTheme: 'system', enableSystem: true }}>
           {children}
         </RootProvider>

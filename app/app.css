@@ -2,6 +2,11 @@
 @import 'fumadocs-ui/css/neutral.css';
 @import 'fumadocs-ui/css/preset.css';
 
+@font-face {
+  font-family: 'SpaceGrotesk';
+  src: url('/font/SpaceGrotesk-Regular.ttf');
+}
+
 /* ============================================================
    LIGHT THEME — Cryo Frost (default fallback)
    ============================================================ */
@@ -163,12 +168,35 @@
   --color-fd-ring: var(--cryo-primary);
 }
 
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  font-family: 'SpaceGrotesk', system-ui, sans-serif;
+}
+
+button, [role='button'], [role='tab'], [role='menuitem'] {
+  cursor: pointer;
+}
+
+a, button, input, select, textarea, [role='button'], [role='tab'], [role='menuitem'] {
+  transition:
+    color var(--cryo-transition-fast),
+    background-color var(--cryo-transition-fast),
+    background var(--cryo-transition-fast),
+    border-color var(--cryo-transition-fast),
+    box-shadow var(--cryo-transition-fast),
+    opacity var(--cryo-transition-fast),
+    transform var(--cryo-transition-fast);
+}
+
 html {
   scrollbar-gutter: stable;
   background: var(--cryo-bg);
   color: var(--cryo-text);
-  font-family: 'Inter', system-ui, sans-serif;
+  font-family: 'SpaceGrotesk', system-ui, sans-serif;
   color-scheme: light;
+  overflow-x: clip;
   transition:
     background-color var(--cryo-transition-normal),
     color var(--cryo-transition-normal);
@@ -179,6 +207,7 @@ html.dark {
 }
 
 body {
+  overflow-x: clip;
   background:
     radial-gradient(
       circle at 20% 0%,
@@ -255,4 +284,149 @@ html > body[data-scroll-locked] {
 
 #nd-docs-layout {
   --fd-layout-width: 100vw;
+  --fd-header-height: 56px;
+}
+
+/* ── Custom docs header — always visible, not md:hidden ──────── */
+#nd-subnav {
+  display: flex !important;
+}
+
+/* ── Hide search from sidebar (moved to top header) ──────────── */
+#nd-sidebar [data-search-full] {
+  display: none;
+}
+
+/* ── Fumadocs nav bar — cryo glassmorphism ────────────────────── */
+#nd-nav > div {
+  background: color-mix(in srgb, var(--cryo-surface) 80%, transparent) !important;
+  backdrop-filter: var(--cryo-blur);
+  -webkit-backdrop-filter: var(--cryo-blur);
+  border-color: var(--cryo-border) !important;
+  transition: background var(--cryo-transition-normal), border-color var(--cryo-transition-normal);
+}
+
+/* ── Fumadocs sidebar — cryo surface ─────────────────────────── */
+#nd-sidebar {
+  background: var(--cryo-surface) !important;
+  border-color: var(--cryo-border) !important;
+}
+
+/* Undo neutral.css's hardcoded gray overrides for dark sidebar */
+.dark #nd-sidebar {
+  --color-fd-muted: var(--cryo-surface-alt);
+  --color-fd-secondary: var(--cryo-surface-alt);
+  --color-fd-muted-foreground: var(--cryo-text-soft);
+  --color-fd-card: var(--cryo-surface);
+  --color-fd-border: var(--cryo-border);
+}
+
+/* ── Sidebar nav items ────────────────────────────────────────── */
+#nd-sidebar a,
+#nd-sidebar button {
+  color: var(--cryo-text-soft);
+  transition:
+    color var(--cryo-transition-fast),
+    background var(--cryo-transition-fast);
+}
+#nd-sidebar a:hover,
+#nd-sidebar button:hover {
+  color: var(--cryo-text);
+  background: var(--cryo-frost);
+}
+
+/* ── Active sidebar item ─────────────────────────────────────── */
+#nd-sidebar [data-active='true'],
+#nd-sidebar [aria-current='page'] {
+  color: var(--cryo-primary) !important;
+  background: rgba(var(--cryo-primary-rgb), 0.10) !important;
+}
+
+/* ── Search box ──────────────────────────────────────────────── */
+#nd-sidebar input,
+[role='combobox'],
+[cmdk-input] {
+  background: var(--cryo-surface-alt) !important;
+  border-color: var(--cryo-border) !important;
+  color: var(--cryo-text) !important;
+  transition: border-color var(--cryo-transition-fast), box-shadow var(--cryo-transition-fast);
+}
+#nd-sidebar input:focus,
+[cmdk-input]:focus {
+  border-color: var(--cryo-primary) !important;
+  box-shadow: 0 0 0 2px rgba(var(--cryo-primary-rgb), 0.20) !important;
+  outline: none;
+}
+
+/* ── Fumadocs TOC ────────────────────────────────────────────── */
+#nd-toc {
+  border-color: var(--cryo-border) !important;
+  padding-top: var(--fd-header-height, 0px);
+}
+#nd-toc a {
+  color: var(--cryo-text-muted);
+  transition: color var(--cryo-transition-fast);
+}
+#nd-toc a:hover {
+  color: var(--cryo-text);
+}
+#nd-toc [data-active='true'],
+#nd-toc [aria-current='true'] {
+  color: var(--cryo-primary) !important;
+}
+
+/* ── Sidebar section heading / folder labels ─────────────────── */
+#nd-sidebar [data-type='folder'] > button,
+#nd-sidebar .text-fd-muted-foreground {
+  color: var(--cryo-text-soft) !important;
+}
+
+/* ── Sidebar footer (github icon, theme toggle) ──────────────── */
+#nd-sidebar > div:last-child,
+#nd-sidebar footer {
+  border-color: var(--cryo-border) !important;
+  background: var(--cryo-surface) !important;
+}
+
+/* ── Theme toggle button ─────────────────────────────────────── */
+[aria-label='Toggle theme'],
+[data-theme-toggle] {
+  color: var(--cryo-text-soft);
+  transition: color var(--cryo-transition-fast), background var(--cryo-transition-fast);
+}
+[aria-label='Toggle theme']:hover,
+[data-theme-toggle]:hover {
+  color: var(--cryo-primary);
+  background: rgba(var(--cryo-primary-rgb), 0.10);
+}
+
+/* ── Prev / Next footer buttons ──────────────────────────────── */
+#nd-page a[href].rounded-lg {
+  border-color: var(--cryo-border);
+  color: var(--cryo-text-soft);
+  transition:
+    color var(--cryo-transition-fast),
+    background-color var(--cryo-transition-fast),
+    border-color var(--cryo-transition-fast),
+    box-shadow var(--cryo-transition-fast),
+    transform var(--cryo-transition-fast) !important;
+}
+#nd-page a[href].rounded-lg:hover {
+  color: var(--cryo-text);
+  background-color: var(--cryo-frost) !important;
+  border-color: var(--cryo-primary);
+  box-shadow: 0 0 10px rgba(var(--cryo-primary-rgb), 0.12);
+  transform: translateY(-1px);
+}
+#nd-page a[href].rounded-lg .text-fd-muted-foreground {
+  color: var(--cryo-text-muted);
+  transition: color var(--cryo-transition-fast);
+}
+#nd-page a[href].rounded-lg:hover .text-fd-muted-foreground {
+  color: var(--cryo-text-soft);
+}
+
+/* ── Code blocks ─────────────────────────────────────────────── */
+pre, code {
+  font-family: 'JetBrains Mono', 'Fira Code', 'Cascadia Code', monospace !important;
 }

@@ -1,0 +1,48 @@
+---
+title: Plugins
+description: Install, update, and manage plugins on your KryoCloud server.
+---
+
+# Plugins
+
+KryoCloud has a built-in plugin manager that installs and updates plugins without manual file uploads or server restarts.
+
+## Installing a plugin
+
+1. Open **Plugins → Browse** in the dashboard
+2. Search by name or browse categories
+3. Click **Install** — the plugin is copied to `/plugins` and loaded live
+
+## Uploading a custom plugin
+
+If a plugin isn't in the marketplace:
+
+1. Go to **Files → plugins/**
+2. Click **Upload**
+3. Select your `.jar` file
+4. Run `/plugman load PluginName` in the console, or restart the server
+
+## Updating plugins
+
+KryoCloud checks for updates automatically. When an update is available:
+
+- A badge appears on the **Plugins** tab
+- Click **Update All** or update individual plugins
+- Updates are applied on the next restart (or live if the plugin supports it)
+
+## Removing a plugin
+
+1. Go to **Plugins → Installed**
+2. Click the plugin name
+3. Click **Remove**
+
+The `.jar` is deleted and the plugin is unloaded. Any data the plugin stored in `/plugins/PluginName/` is kept until you manually delete it.
+
+## Recommended plugins
+
+| Plugin | Purpose |
+|--------|---------|
+| **EssentialsX** | Core commands (`/tp`, `/home`, `/spawn`) |
+| **LuckPerms** | Permission management |
+| **WorldEdit** | In-game map editing |
+| **Vault** | Economy API bridge |

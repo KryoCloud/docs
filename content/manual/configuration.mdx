@@ -1,0 +1,46 @@
+---
+title: Configuration
+description: Customize your server settings, properties, and environment.
+---
+
+# Configuration
+
+KryoCloud lets you configure every aspect of your server from the dashboard or by editing config files directly.
+
+## Server properties
+
+The **Settings → Properties** tab exposes the most common `server.properties` values:
+
+| Property | Default | Description |
+|----------|---------|-------------|
+| `max-players` | `20` | Maximum concurrent players |
+| `difficulty` | `normal` | Game difficulty |
+| `pvp` | `true` | Player vs. player combat |
+| `view-distance` | `10` | Chunk render distance |
+| `motd` | — | Message shown in the server list |
+
+## Environment variables
+
+Advanced settings can be set as environment variables under **Settings → Environment**:
+
+```sh
+JAVA_OPTS=-Xms512M -Xmx4G -XX:+UseG1GC
+TZ=Europe/Berlin
+```
+
+## Config file editor
+
+For full control, use the built-in file editor under **Files**. You can edit any config file — `paper.yml`, `spigot.yml`, `config.yml` — directly in the browser.
+
+<Callout type="warn">
+  Changes to config files take effect on the next server restart unless the plugin supports `/reload`.
+</Callout>
+
+## Startup flags
+
+KryoCloud applies recommended Aikar JVM flags by default. You can override them in **Settings → Startup**:
+
+```
+-Xms{MIN_RAM}M -Xmx{MAX_RAM}M -XX:+UseG1GC -XX:+ParallelRefProcEnabled
+-XX:MaxGCPauseMillis=200 -XX:+UnlockExperimentalVMOptions
+```

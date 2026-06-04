@@ -1,0 +1,55 @@
+---
+title: Getting Started
+description: Create and launch your first KryoCloud server.
+---
+
+# Getting Started
+
+This guide walks you through creating your first server on KryoCloud.
+
+## Prerequisites
+
+- A KryoCloud account ([sign up](https://kryocloud.eu))
+- Basic familiarity with Minecraft server administration
+
+## 1. Create a server
+
+Log in to the KryoCloud dashboard and click **New Server**. Fill in:
+
+| Field | Description |
+|-------|-------------|
+| Name | Display name for your server |
+| Version | Minecraft version (e.g. `1.21.4`) |
+| Type | Vanilla, Paper, Fabric, or Forge |
+| RAM | Memory allocated (minimum 1 GB) |
+| Region | Closest data centre to your players |
+
+Click **Deploy** — your server will be online within seconds.
+
+## 2. Connect to your server
+
+Once deployed, your server address is shown on the dashboard:
+
+```
+play.yourserver.kryocloud.eu
+```
+
+Use this address in Minecraft's **Multiplayer → Add Server** screen.
+
+## 3. Access the console
+
+Click **Console** in the dashboard to run commands directly:
+
+```sh
+/op YourUsername
+/gamemode creative YourUsername
+/whitelist add FriendName
+```
+
+## 4. Install plugins
+
+Go to **Plugins → Browse**, search for a plugin, and click **Install**. The plugin is loaded without a full restart.
+
+<Callout type="info">
+  Paper, Fabric, and Forge servers support plugins and mods. Vanilla servers do not.
+</Callout>
